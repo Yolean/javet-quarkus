@@ -62,3 +62,4 @@ ENTRYPOINT ["/usr/local/bin/quarkus", "-Djava.util.logging.manager=org.jboss.log
 USER nobody:nogroup
 
 COPY --from=build --chown=nobody:nogroup /tmp/javet /tmp/javet
+RUN ls -lR /tmp/javet
