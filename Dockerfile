@@ -7,7 +7,7 @@ FROM ubuntu:20.04@sha256:626ffe58f6e7566e00254b638eb7e0f3b11d4da9675088f4781a50a
 RUN set -ex; \
   export DEBIAN_FRONTEND=noninteractive; \
   runDeps='libsnappy1v5 libsnappy-jni liblz4-1 liblz4-jni libzstd1'; \
-  buildDeps='gcc g++ libc-dev make zlib1g-dev libsnappy-dev liblz4-dev libzstd-dev'; \
+  buildDeps='gcc g++ libc-dev make zlib1g-dev libsnappy-dev liblz4-dev libzstd-dev unzip'; \
   apt-get update && apt-get install -y $runDeps $buildDeps --no-install-recommends; \
   \
   echo "With https://github.com/caoccao/Javet/discussions/26" \
@@ -49,7 +49,10 @@ RUN set -e; \
   mvn --batch-mode package -Pnative -Dquarkus.native.additional-build-args=--dry-run \
     || echo "... Build error is expected. Caching dependencies."; \
   rm -r src;
-COPY . .
+COPY --chown=quarkus . .
+RUN set -e; \
+  cd src/main/resources; \
+  unzip $HOME/.m2/repository/com/caoccao/javet/javet/1.0.1/javet-1.0.1.jar '*.so'
 RUN ["mvn", "package", "-Pnative"]
 
 FROM builder as runtime
