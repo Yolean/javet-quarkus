@@ -16,4 +16,5 @@ Build runtime image while still depending on local mvn build
 ```
 # Build avoiding Quarkus' inverted default .dockerignore
 DOCKER_BUILDKIT=1 docker build -t javet-quarkus:local .
+docker run --rm -p 8080:8080 javet-quarkus:local
 ```

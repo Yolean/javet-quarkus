@@ -56,3 +56,5 @@ FROM builder as runtime
 COPY --from=build /project/target/javet-quarkus-*-runner /usr/local/bin/quarkus
 ENTRYPOINT ["/usr/local/bin/quarkus", "-Djava.util.logging.manager=org.jboss.logmanager.LogManager"]
 USER nobody:nogroup
+
+COPY --from=build --chown=nobody:nogroup /tmp/javet /tmp/javet
