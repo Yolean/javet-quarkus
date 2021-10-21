@@ -54,6 +54,7 @@ RUN set -e; \
   cd src/main/resources; \
   unzip $HOME/.m2/repository/com/caoccao/javet/javet/1.0.1/javet-1.0.1.jar '*.so'
 RUN ["mvn", "package", "-Pnative"]
+RUN ls -lR /tmp/javet
 
 FROM builder as runtime
 COPY --from=build /project/target/javet-quarkus-*-runner /usr/local/bin/quarkus
