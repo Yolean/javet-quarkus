@@ -18,3 +18,12 @@ Build runtime image while still depending on local mvn build
 DOCKER_BUILDKIT=1 docker build -t javet-quarkus:local .
 docker run --rm -p 8080:8080 javet-quarkus:local
 ```
+
+Nativetracing, with GraalVM/Mandrel in path:
+```
+JAVA_ARGS="-agentlib:native-image-agent=config-merge-dir=src/main/resources/"
+java $JAVA_ARGS -jar target/quarkus-app/quarkus-run.jar
+curl http://localhost:8080/hello
+# stop the Quarkus process, then
+git diff src/main/resources/*.json
+```
