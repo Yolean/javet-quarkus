@@ -38,6 +38,11 @@
       <artifactId>quarkus-resteasy</artifactId>
     </dependency>
     <dependency>
+      <groupId>com.caoccao.javet</groupId>
+      <artifactId>javet</artifactId>
+      <version>1.0.1</version>
+    </dependency>
+    <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-junit5</artifactId>
       <scope>test</scope>
