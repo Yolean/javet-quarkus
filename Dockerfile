@@ -50,11 +50,9 @@ RUN set -e; \
     || echo "... Build error is expected. Caching dependencies."; \
   rm -r src;
 COPY --chown=quarkus . .
-USER root
 RUN set -e; \
-  cd /usr/lib/x86_64-linux-gnu; \
-  unzip /home/quarkus/.m2/repository/com/caoccao/javet/javet/1.0.1/javet-1.0.1.jar '*.so'
-USER 1001:nogroup
+  cd src/main/resources; \
+  unzip $HOME/.m2/repository/com/caoccao/javet/javet/1.0.1/javet-1.0.1.jar '*.so'
 RUN ["mvn", "package", "-Pnative"]
 RUN ls -lR /tmp/javet
 
@@ -63,4 +61,5 @@ COPY --from=build /project/target/javet-quarkus-*-runner /usr/local/bin/quarkus
 ENTRYPOINT ["/usr/local/bin/quarkus", "-Djava.util.logging.manager=org.jboss.logmanager.LogManager"]
 USER nobody:nogroup
 
-COPY --from=build /usr/lib/x86_64-linux-gnu/libjavet-* /usr/lib/x86_64-linux-gnu/
+COPY --from=build --chown=nobody:nogroup /tmp/javet /tmp/javet
+RUN ls -lR /tmp/javet
