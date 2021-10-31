@@ -1,3 +1,6 @@
+
+_**Retired. See the [extension](https://github.com/Yolean/quarkus-javet) instead.**_
+
 # Javet + Quarkus experiment
 
 See https://github.com/caoccao/Javet/issues/107
